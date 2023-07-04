@@ -26,7 +26,7 @@
 
         <encoder  class="PatternLayoutEncoder">
             <pattern>
-                %date{ISO8601} [%thread] [%-5level] %logger: %message%n
+                %date{ISO8601} [%thread] %-5level %logger: %message%n
             </pattern>
         </encoder>
     </appender>
