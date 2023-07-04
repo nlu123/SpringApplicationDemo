@@ -1,8 +1,6 @@
 package com.example.demo.controllerTests;
 
-
 import com.example.demo.controller.AnonBlogController;
-import com.example.demo.controller.BlogController;
 import com.example.demo.persistence.model.Blog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,6 @@ public class AnonBlogControllerTests {
 
     @Autowired
     private AnonBlogController anonBlogController;
-
-    @Autowired
-    private BlogController blogController;
 
     @Test
     @Transactional
