@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.persistence.model.Blog;
-import com.example.demo.persistence.mapper.BlogMapper;
-import jakarta.validation.Valid;
+import com.example.demo.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -11,26 +11,30 @@ import java.util.List;
 public class BlogController {
 
     @Autowired
-    private BlogMapper blogMapper;
+    private BlogService blogService;
 
     @GetMapping("/blogs/{blogId}")
     public Blog selectBlog(@PathVariable Integer blogId) {
-        return blogMapper.selectBlog(blogId);
+        return blogService.selectBlog(blogId);
     }
 
     @PostMapping("/blogs")
-    public int createBlog(@RequestBody @Valid Blog blog) {
-        return blogMapper.insertBlog(blog);
+    public void createBlog(@RequestBody Blog blog) {
+        blogService.createBlog(blog);
     }
 
     @DeleteMapping("/blogs/{blogId}")
-    public int deleteBlog(@PathVariable Integer blogId) {
-        return blogMapper.deleteBlog(blogId);
+    public void deleteBlog(@PathVariable Integer blogId) {
+        blogService.deleteBlog(blogId);
     }
 
     @PutMapping("/blogs")
-    public int updateBlog(@RequestBody @Valid Blog blog) { return blogMapper.updateBlog(blog); }
+    public void updateBlog(@RequestBody Blog blog) { blogService.updateBlog(blog); }
 
     @GetMapping("/blogs/user/{userId}")
-    public List<Blog> selectBlogsByUser(@PathVariable Integer userId) { return blogMapper.selectBlogsByUser(userId); }
+    public List<Blog> selectBlogsByUser(@PathVariable Integer userId) { return blogService.selectBlogsByUser(userId); }
+
+    @PostMapping("/blogs/anon")
+    @Transactional
+    public void createAnonymousBlog(@RequestBody Blog blog){ blogService.createAnonymousBlog(blog); }
 }

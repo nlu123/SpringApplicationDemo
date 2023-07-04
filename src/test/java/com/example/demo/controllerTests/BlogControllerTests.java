@@ -37,7 +37,7 @@ public class BlogControllerTests {
     @Transactional
     public void createBlogTest_invalidUserId(){
         Blog newBlog = new Blog(0, 0, "BCT", "CBT", null, null);
-        assertThatThrownBy(() -> {blogController.createBlog(newBlog);}).isInstanceOf(Exception.class);
+        assertThatThrownBy(() -> blogController.createBlog(newBlog)).isInstanceOf(Exception.class);
     }
     
     @Test
@@ -133,5 +133,23 @@ public class BlogControllerTests {
         userController.createUser(newUser);
         List<Blog> selectedList = blogController.selectBlogsByUser(newUser.getUserId());
         assertThat(selectedList.isEmpty()).isTrue();
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void createAnonymousBlogTest(){
+        Blog newBlog = new Blog(0,0,"ABC","CABT", null, null);
+        blogController.createAnonymousBlog(newBlog);
+        assertThat(newBlog.getBlogId()).isNotEqualTo(0);
+        assertThat(newBlog.getUserId()).isNotEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void createAnonymousBlog_invalidInput(){
+        Blog newBlog = new Blog(0,0,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","CABT", null, null);
+        assertThatThrownBy(() -> blogController.createAnonymousBlog(newBlog)).isInstanceOf(Exception.class);
     }
 }

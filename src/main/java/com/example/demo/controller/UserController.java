@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.persistence.model.User;
-import com.example.demo.persistence.mapper.UserMapper;
+import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/users/{userId}")
     public User selectUser(@PathVariable Integer userId) {
-        return userMapper.selectUser(userId);
+        return userService.selectUser(userId);
     }
 
     @PostMapping("/users")
-    public int createUser(@RequestBody @Valid User user) {
-        return userMapper.insertUser(user);
+    public void createUser(@RequestBody @Valid User user) {
+        userService.createUser(user);
     }
 
     @DeleteMapping("/users/{userId}")
-    public int deleteUser(@PathVariable Integer userId) {
-        return userMapper.deleteUser(userId);
+    public void deleteUser(@PathVariable Integer userId) {
+        userService.deleteUser(userId);
     }
 
     @PutMapping("/users")
-    public int updateUser(@RequestBody @Valid User user) {
-        return userMapper.updateUser(user);
+    public void updateUser(@RequestBody @Valid User user) {
+        userService.updateUser(user);
     }
 }

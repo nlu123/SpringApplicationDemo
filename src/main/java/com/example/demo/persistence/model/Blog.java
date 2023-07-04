@@ -7,7 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import java.time.Instant;
 
 @Data
-@AllArgsConstructor public class Blog {
+@AllArgsConstructor
+public class Blog {
     int blogId;
     int userId;
     @Size(max = 20)
