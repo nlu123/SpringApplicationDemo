@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+    <import class="ch.qos.logback.core.ConsoleAppender"/>
+    <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+    <import class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"/>
+
+    <!--https://logback.qos.ch/manual/appenders.html -->
+    <appender name="ConsoleLog" class="ConsoleAppender">
+        <encoder class="PatternLayoutEncoder">
+            <!--https://logback.qos.ch/manual/layouts.html -->
+            <pattern>
+                %white(%date{ISO8601}) [%cyan(%thread)] %highlight{%-5level} %magenta(%logger): %message%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileLog" class="RollingFileAppender">
+        <file>.log/application.log</file>
+        <rollingPolicy class="TimeBasedRollingPolicy">
+            <fileNamePattern>.log/archived/application.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <totalSizeCap>1GB</totalSizeCap>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>false</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <encoder  class="PatternLayoutEncoder">
+            <pattern>
+                %date{ISO8601} [%thread] [%-5level] %logger: %message%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="ConsoleLog"/>
+        <appender-ref ref="FileLog"/>
+    </root>
+
+    <logger name="com.example" level="trace" additivity="false">
+        <appender-ref ref="ConsoleLog"/>
+        <appender-ref ref="FileLog" />
+    </logger>
+
+</configuration>
