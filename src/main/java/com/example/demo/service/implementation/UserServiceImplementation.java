@@ -5,32 +5,43 @@ import com.example.demo.persistence.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type User service implementation.
+ */
 @Service
 public class UserServiceImplementation implements UserService {
 
+    /**
+     * The User mapper.
+     */
     private final UserMapper userMapper;
 
-    public UserServiceImplementation(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    /**
+     * Instantiates a new User service implementation.
+     *
+     * @param newUserMapper the user mapper
+     */
+    public UserServiceImplementation(final UserMapper newUserMapper) {
+        this.userMapper = newUserMapper;
     }
 
     @Override
-    public void createUser(User user) {
+    public final void createUser(final User user) {
         userMapper.insertUser(user);
     }
 
     @Override
-    public User selectUser(int userId) {
+    public final User selectUser(final int userId) {
         return userMapper.selectUser(userId);
     }
 
     @Override
-    public void updateUser(User user) {
+    public final void updateUser(final User user) {
         userMapper.updateUser(user);
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public final void deleteUser(final int userId) {
         userMapper.deleteUser(userId);
     }
 }

@@ -9,15 +9,26 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+/**
+ * The type Test container.
+ */
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = TestContainer.Initializer.class)
 @Testcontainers
 public abstract class TestContainer {
 
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(@NonNull ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext);
+    /**
+     * The type Initializer.
+     */
+    static class Initializer implements
+            ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(
+                @NonNull final ConfigurableApplicationContext
+                        configurableApplicationContext) {
+            TestPropertySourceUtils
+                    .addInlinedPropertiesToEnvironment(
+                            configurableApplicationContext);
         }
     }
 }

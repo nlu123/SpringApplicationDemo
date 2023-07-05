@@ -10,50 +10,71 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The type Blog service implementation.
+ */
 @Service
 public class BlogServiceImplementation implements BlogService {
 
+    /**
+     * The Blog mapper.
+     */
     private BlogMapper blogMapper;
 
-    private UserMapper userMapper;
+    /**
+     * The User mapper.
+     */
+    private final UserMapper userMapper;
 
-    public BlogServiceImplementation(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    /**
+     * Instantiates a new Blog service implementation.
+     *
+     * @param newUserMapper the user mapper
+     */
+    public BlogServiceImplementation(final UserMapper newUserMapper) {
+        this.userMapper = newUserMapper;
     }
 
+    /**
+     * Instantiates a new Blog service implementation.
+     *
+     * @param newBlogMapper the blog mapper
+     * @param newUserMapper the user mapper
+     */
     @Autowired
-    public BlogServiceImplementation(BlogMapper blogMapper, UserMapper userMapper) {
-        this.userMapper = userMapper;
-        this.blogMapper = blogMapper;
+    public BlogServiceImplementation(
+            final BlogMapper newBlogMapper, final UserMapper newUserMapper) {
+        this.userMapper = newUserMapper;
+        this.blogMapper = newBlogMapper;
     }
 
     @Override
-    public void createBlog(Blog blog) {
+    public final void createBlog(final Blog blog) {
         blogMapper.insertBlog(blog);
     }
 
     @Override
-    public Blog selectBlog(int blogId) {
+    public final Blog selectBlog(final int blogId) {
         return blogMapper.selectBlog(blogId);
     }
 
     @Override
-    public void updateBlog(Blog blog) {
+    public final void updateBlog(final Blog blog) {
         blogMapper.updateBlog(blog);
     }
 
     @Override
-    public List<Blog> selectBlogsByUser(int userId) {
+    public final List<Blog> selectBlogsByUser(final int userId) {
         return blogMapper.selectBlogsByUser(userId);
     }
 
     @Override
-    public void deleteBlog(int blogId) {
+    public final void deleteBlog(final int blogId) {
         blogMapper.deleteBlog(blogId);
     }
 
     @Override
-    public void createAnonymousBlog(Blog blog) {
+    public final void createAnonymousBlog(final Blog blog) {
         User user = new User(0, "anon");
         userMapper.insertUser(user);
         blog.setUserId(user.getUserId());

@@ -5,9 +5,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Log tester.
+ */
 @RestController
 public class LogTester {
+    /**
+     * The Logger.
+     */
     private final Logger logger = LoggerFactory.getLogger(LogTester.class);
+
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @SuppressWarnings("SameReturnValue")
     @RequestMapping("/test/log")
     public String index() {
