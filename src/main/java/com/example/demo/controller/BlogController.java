@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.persistence.model.Blog;
 import com.example.demo.service.BlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 @RestController
 public class BlogController {
 
-    @Autowired
-    private BlogService blogService;
+    private final BlogService blogService;
+
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     @GetMapping("/blogs/{blogId}")
     public Blog selectBlog(@PathVariable Integer blogId) {

@@ -12,12 +12,20 @@ import java.util.List;
 
 @Service
 public class BlogServiceImplementation implements BlogService {
-    
-    @Autowired
+
     private BlogMapper blogMapper;
 
+    private UserMapper userMapper;
+
+    public BlogServiceImplementation(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Autowired
-    UserMapper userMapper;
+    public BlogServiceImplementation(BlogMapper blogMapper, UserMapper userMapper) {
+        this.userMapper = userMapper;
+        this.blogMapper = blogMapper;
+    }
 
     @Override
     public void createBlog(Blog blog) {

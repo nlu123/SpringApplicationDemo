@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LogTester {
-    Logger logger = LoggerFactory.getLogger(LogTester.class);
+    private final Logger logger = LoggerFactory.getLogger(LogTester.class);
+    @SuppressWarnings("SameReturnValue")
     @RequestMapping("/test/log")
     public String index() {
         logger.trace("A TRACE Message");
