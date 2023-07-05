@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LogController {
-    Logger logger = LoggerFactory.getLogger(LogController.class);
+public class LogTester {
+    Logger logger = LoggerFactory.getLogger(LogTester.class);
     @RequestMapping("/test/log")
     public String index() {
         logger.trace("A TRACE Message");

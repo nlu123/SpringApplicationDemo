@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS BLOGS(
     time_created TIME,
     time_last_modified TIME,
     PRIMARY KEY(blog_id),
-    CONSTRAINT user_exsists FOREIGN KEY(user_id) REFERENCES USERS(user_id)
+    CONSTRAINT user_exists FOREIGN KEY(user_id) REFERENCES USERS(user_id)
 );
