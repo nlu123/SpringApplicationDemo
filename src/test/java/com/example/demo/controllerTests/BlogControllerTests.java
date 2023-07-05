@@ -1,19 +1,17 @@
 package com.example.demo.controllerTests;
 
+import com.example.demo.TestContainer;
 import com.example.demo.controller.BlogController;
 import com.example.demo.controller.UserController;
 import com.example.demo.persistence.model.Blog;
 import com.example.demo.persistence.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
-public class BlogControllerTests {
+public class BlogControllerTests extends TestContainer {
     
     @Autowired
     private BlogController blogController;
@@ -22,7 +20,6 @@ public class BlogControllerTests {
     private UserController userController;
     
     @Test
-    @Rollback
     @Transactional
     public void createBlogTest(){
         User newUser = new User(0, "BCT");
@@ -33,7 +30,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void createBlogTest_invalidUserId(){
         Blog newBlog = new Blog(0, 0, "BCT", "CBT", null, null);
@@ -41,7 +37,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void deleteBlogTest(){
         User newUser = new User(0, "BCT");
@@ -52,14 +47,12 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void deleteBlog_blogNotFound(){
         blogController.deleteBlog(0);
     }
     
     @Test
-    @Rollback
     @Transactional
     public void updateBlogTest(){
         User newUser = new User(0, "BCT");
@@ -74,7 +67,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void updateBlogTest_blogNotFound(){
         Blog newBlog = new Blog(0, 0, "BCT", "UBT_BNF", null, null);
@@ -82,7 +74,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void selectBlogTest(){
         User newUser = new User(0, "BCT");
@@ -95,7 +86,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void selectBlogTest_blogNotFound(){
         Blog selectedBlog = blogController.selectBlog(0);
@@ -103,7 +93,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void selectBlogsByUserTest(){
         User newUser = new User(0, "BCT");
@@ -118,7 +107,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void selectBlogsByUserTest_userNotFound(){
         List<Blog> selectedList = blogController.selectBlogsByUser(-1);
@@ -126,7 +114,6 @@ public class BlogControllerTests {
     }
     
     @Test
-    @Rollback
     @Transactional
     public void selectBlogsByUserTest_blogsNotFound(){
         User newUser = new User(0, "BCT");
@@ -137,7 +124,6 @@ public class BlogControllerTests {
 
     @Test
     @Transactional
-    @Rollback
     void createAnonymousBlogTest(){
         Blog newBlog = new Blog(0,0,"ABC","CABT", null, null);
         blogController.createAnonymousBlog(newBlog);
@@ -147,7 +133,6 @@ public class BlogControllerTests {
 
     @Test
     @Transactional
-    @Rollback
     void createAnonymousBlog_invalidInput(){
         Blog newBlog = new Blog(0,0,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","CABT", null, null);
         assertThatThrownBy(() -> blogController.createAnonymousBlog(newBlog)).isInstanceOf(Exception.class);

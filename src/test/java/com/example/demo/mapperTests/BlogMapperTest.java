@@ -1,5 +1,6 @@
 package com.example.demo.mapperTests;
 
+import com.example.demo.TestContainer;
 import com.example.demo.persistence.mapper.BlogMapper;
 import com.example.demo.persistence.mapper.UserMapper;
 import com.example.demo.persistence.model.Blog;
@@ -7,13 +8,12 @@ import com.example.demo.persistence.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
 import java.util.List;
 
 @SpringBootTest
-public class BlogMapperTest {
+public class BlogMapperTest extends TestContainer {
 
     @Autowired
     private BlogMapper blogMapper;
@@ -23,7 +23,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectBlogTest(){
         User newUser = new User(0, "BMT SBT");
         userMapper.insertUser(newUser);
@@ -37,7 +36,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectBlogTest_blogNotFound(){
         Blog selectedBlog = blogMapper.selectBlog(0);
         assertThat(selectedBlog).isNull();
@@ -46,7 +44,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectBlogsByUserTest(){
         User newUser = new User(0, "BMT SBBUT");
         userMapper.insertUser(newUser);
@@ -61,7 +58,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectBlogsByUserTest_userNotFound(){
         List<Blog> selectedBlogs = blogMapper.selectBlogsByUser(0);
         assertThat(selectedBlogs.size()).isEqualTo(0);
@@ -69,7 +65,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectBlogsByUserTest_blogsNotFound(){
         User newUser = new User(0, "BMT SBBUT");
         userMapper.insertUser(newUser);
@@ -79,7 +74,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void deleteBlogTest(){
         User newUser = new User(0, "BMT DBT");
         userMapper.insertUser(newUser);
@@ -94,14 +88,12 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void deleteBlogTest_blogNotFound(){
         blogMapper.deleteBlog(0);
     }
 
     @Test
     @Transactional
-    @Rollback
     public void insertBlogTest(){
         User newUser = new User(0, "BMT IBT");
         userMapper.insertUser(newUser);
@@ -112,15 +104,13 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void insertBlogTest_invalidUserId(){
         Blog newBlog = new Blog(0, 0, "IBT TITLE", "IBT CONTENT", null, null);
-        assertThatThrownBy(() -> {blogMapper.insertBlog(newBlog);}).isInstanceOf(Exception.class);
+        assertThatThrownBy(() -> blogMapper.insertBlog(newBlog)).isInstanceOf(Exception.class);
     }
 
     @Test
     @Transactional
-    @Rollback
     public void updateBlogTest(){
         User newUser = new User(0, "BMT UBT");
         userMapper.insertUser(newUser);
@@ -137,7 +127,6 @@ public class BlogMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void updateBlogTest_blogNotFound(){
         Blog newBlog = new Blog(0, 0, "UBT TITLE", "UBT CONTENT", null, null);
         blogMapper.updateBlog(newBlog);

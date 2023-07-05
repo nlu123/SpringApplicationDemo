@@ -1,18 +1,16 @@
 package com.example.demo.controllerTests;
 
+import com.example.demo.TestContainer;
 import com.example.demo.controller.BlogController;
 import com.example.demo.controller.UserController;
 import com.example.demo.persistence.model.Blog;
 import com.example.demo.persistence.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
-public class UserControllerTests {
+public class UserControllerTests extends TestContainer {
 
     @Autowired
     private UserController userController;
@@ -22,7 +20,6 @@ public class UserControllerTests {
 
     @Test
     @Transactional
-    @Rollback
     public void createUserTest(){
         User newUser = new User(0, "UCT CUT");
         userController.createUser(newUser);
@@ -31,7 +28,6 @@ public class UserControllerTests {
 
     @Test
     @Transactional
-    @Rollback
     public void selectUserTest(){
         User newUser = new User(0, "UCT SUT");
         userController.createUser(newUser);
@@ -42,14 +38,12 @@ public class UserControllerTests {
 
     @Test
     @Transactional
-    @Rollback
     public void selectUserTest_userNotFound(){
         User user = userController.selectUser(0);
         assertThat(user).isNull();
     }
 
     @Test
-    @Rollback
     @Transactional
     public void deleteUserTest(){
         User newUser = new User(0, "UCT DUT");
@@ -62,25 +56,22 @@ public class UserControllerTests {
     }
 
     @Test
-    @Rollback
     @Transactional
     public void deleteUserTest_blogsExists(){
         User newUser = new User(0, "UCT DUT");
         userController.createUser(newUser);
         Blog newBlog = new Blog(0, newUser.getUserId(), "UCT", "DUT", null, null);
         blogController.createBlog(newBlog);
-        assertThatThrownBy(() -> {userController.deleteUser(newUser.getUserId());}).isInstanceOf(Exception.class);
+        assertThatThrownBy(() -> userController.deleteUser(newUser.getUserId())).isInstanceOf(Exception.class);
     }
 
     @Test
-    @Rollback
     @Transactional
     public void deleteUserTest_userNotFound(){
         userController.deleteUser(0);
     }
 
     @Test
-    @Rollback
     @Transactional
     public void updateUserTest(){
         User newUser = new User(0, "UCT UUT");
@@ -92,7 +83,6 @@ public class UserControllerTests {
     }
 
     @Test
-    @Rollback
     @Transactional
     public void updateUserTest_userNotFound(){
         User newUser = new User(0, "UCT UUT");

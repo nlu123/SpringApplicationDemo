@@ -1,23 +1,22 @@
 package com.example.demo.mapperTests;
 
+import com.example.demo.TestContainer;
 import com.example.demo.persistence.mapper.UserMapper;
 import com.example.demo.persistence.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-public class UserMapperTest {
+public class UserMapperTest extends TestContainer {
 
     @Autowired
     private UserMapper userMapper;
 
     @Test
     @Transactional
-    @Rollback
     public void selectUserTest(){
         User newUser = new User(0, "UMT SUT");
         userMapper.insertUser(newUser);
@@ -28,7 +27,6 @@ public class UserMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void selectUserTest_userNotFound(){
         User selectedUser = userMapper.selectUser(0);
         assertThat(selectedUser).isNull();
@@ -36,7 +34,6 @@ public class UserMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void deleteUserTest(){
         User newUser = new User(0, "UMT DUT");
         userMapper.insertUser(newUser);
@@ -49,14 +46,12 @@ public class UserMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void deleteUserTest_userNotFound(){
         userMapper.deleteUser(0);
     }
 
     @Test
     @Transactional
-    @Rollback
     public void insertUserTest(){
         User newUser = new User(0, "UMT IUT");
         userMapper.insertUser(newUser);
@@ -65,7 +60,6 @@ public class UserMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void updateUserTest(){
         User newUser = new User(0, "UMT IUT");
         userMapper.insertUser(newUser);
@@ -77,7 +71,6 @@ public class UserMapperTest {
 
     @Test
     @Transactional
-    @Rollback
     public void updateUserTest_userNotFound(){
         User newUser = new User(0, "UMT IUT");
         userMapper.updateUser(newUser);
